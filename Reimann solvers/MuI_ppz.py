@@ -258,89 +258,89 @@ def Full_ppz(q_l,q_r,aux_l,aux_r,problem_data):
     #Calculating Pp by solving ode Ppz = f(mw,m1,..Pp)
     
     delx = (1.5 + 0.5)/(num_rp-3)    
-    z = np.linspace(-0.5-delx,1.5+delx,num_rp)
+    zz = np.linspace(-0.5-delx,1.5+delx,num_rp)
 
     #pyplot.figure(7)
     #pyplot.plot(z,F3(mu1,m_ml[0,:]))
     #pyplot.savefig('plot_m.png',dpi = 300)
 
     # #raise Exception('Inside Riemann solver')
-    pp_ml[0] = Pp(mu1,m_ml[0,0],D,R[0],phim[0])
-    #pp_ml[1] = Pp(mu1,m_ml[0,1],D,R[1],phim[1]) 
-    pp_mr[0] = Pp(mu1,m_mr[0,0],D,R[0],phim[0])
-    pp_pl[0] = Pp(mu1,m_pl[0,0],D,R[0],phim_l[0])
-    #pp_pl[1] = Pp(mu1,m_pl[0,1],D,R[1],phim_l[1])
-    pp_pr[0] = Pp(mu1,m_pr[0,0],D,R[0],phim_r[0])
-    pp_rl[0] = Pp(mu1,m_rl[0,0],D,R_l[0],phim[0])
-    #pp_rl[1] = Pp(mu1,m_rl[0,1],D,R_l[1],phim[1])
-    pp_rr[0] = Pp(mu1,m_rr[0,0],D,R_r[0],phim[0])
-    #print(R_r[0])
-    pp_mlI = pp_ml[0]
-    pp_mrI = pp_mr[0]
-    pp_plI = pp_pl[0]
-    pp_prI = pp_pr[0]
-    pp_rlI = pp_rl[0]
-    pp_rrI = pp_rr[0]
+    # pp_ml[0] = Pp(mu1,m_ml[0,0],D,R[0],phim[0])
+    # #pp_ml[1] = Pp(mu1,m_ml[0,1],D,R[1],phim[1]) 
+    # pp_mr[0] = Pp(mu1,m_mr[0,0],D,R[0],phim[0])
+    # pp_pl[0] = Pp(mu1,m_pl[0,0],D,R[0],phim_l[0])
+    # #pp_pl[1] = Pp(mu1,m_pl[0,1],D,R[1],phim_l[1])
+    # pp_pr[0] = Pp(mu1,m_pr[0,0],D,R[0],phim_r[0])
+    # pp_rl[0] = Pp(mu1,m_rl[0,0],D,R_l[0],phim[0])
+    # #pp_rl[1] = Pp(mu1,m_rl[0,1],D,R_l[1],phim[1])
+    # pp_rr[0] = Pp(mu1,m_rr[0,0],D,R_r[0],phim[0])
+    # #print(R_r[0])
+    # pp_mlI = pp_ml[0]
+    # pp_mrI = pp_mr[0]
+    # pp_plI = pp_pl[0]
+    # pp_prI = pp_pr[0]
+    # pp_rlI = pp_rl[0]
+    # pp_rrI = pp_rr[0]
 
     # # pp_ml[1]=pp_ml[0]
     # # pp_pl[1]=pp_pl[0]
     # # pp_rl[1]=pp_rl[0]
 
-    x=0
-    for x in range(1, num_rp):
-        #print(x)
-        #if (x<(num_rp-1)):
-        arg = (mu1,m_ml[0,x],D,R[x],phim[x])
-        sol = solve_ivp( Ppz, [z[x-1], z[x]], [pp_mlI] , t_eval=[ z[x]],args = arg, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
-        X = sol.y
-        pp_ml[x] = X[0,0]
-        pp_mlI = X[0,0]
-        #print(sol.y) 
-        #print(pp_ml[x])
-        #raise Exception('ODE solved')
-        #try:
-        arg1 = (mu1,m_mr[0,x],D,R[x],phim[x])
-        sol1 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_mrI], t_eval=[z[x]],args = arg1, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
-        X1 = sol1.y
-        pp_mr[x] = X1[0,0] 
-        #pz_mr[x] = ppz_val(pp_mr[x],mu1,m_mr[0,x],D,R[x],phim[x])
-        pp_mrI = X1[0,0]
-        # except:
-        #     print(x)
-        #     print(len(pp_ml))
-        #     print(len(X))
+    # x=0
+    # for x in range(1, num_rp):
+    #     #print(x)
+    #     #if (x<(num_rp-1)):
+    #     arg = (mu1,m_ml[0,x],D,R[x],phim[x])
+    #     sol = solve_ivp( Ppz, [z[x-1], z[x]], [pp_mlI] , t_eval=[ z[x]],args = arg, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
+    #     X = sol.y
+    #     pp_ml[x] = X[0,0]
+    #     pp_mlI = X[0,0]
+    #     #print(sol.y) 
+    #     #print(pp_ml[x])
+    #     #raise Exception('ODE solved')
+    #     #try:
+    #     arg1 = (mu1,m_mr[0,x],D,R[x],phim[x])
+    #     sol1 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_mrI], t_eval=[z[x]],args = arg1, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
+    #     X1 = sol1.y
+    #     pp_mr[x] = X1[0,0] 
+    #     #pz_mr[x] = ppz_val(pp_mr[x],mu1,m_mr[0,x],D,R[x],phim[x])
+    #     pp_mrI = X1[0,0]
+    #     # except:
+    #     #     print(x)
+    #     #     print(len(pp_ml))
+    #     #     print(len(X))
                
-        #pp_mr[x] = sol.y 
-        #print(pp_mr[x])
+    #     #pp_mr[x] = sol.y 
+    #     #print(pp_mr[x])
 
-        #if (x<(num_rp-1)):
-        arg2 = (mu1,m_pl[0,x],D,R[x],phim_l[x])
-        sol2 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_plI], t_eval=[z[x]],args = arg2, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
-        X2 = sol2.y
-        pp_pl[x] = X2[0,0]             
-        pp_plI = X2[0,0]
+    #     #if (x<(num_rp-1)):
+    #     arg2 = (mu1,m_pl[0,x],D,R[x],phim_l[x])
+    #     sol2 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_plI], t_eval=[z[x]],args = arg2, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
+    #     X2 = sol2.y
+    #     pp_pl[x] = X2[0,0]             
+    #     pp_plI = X2[0,0]
 
-        arg3 = (mu1,m_pr[0,x],D,R[x],phim_r[x])
-        sol3 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_prI], t_eval=[z[x]],args = arg3, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
-        X3 = sol3.y
-        pp_pr[x] = X3[0,0] 
-        #pz_pr[x] = ppz_val(pp_pr[x],mu1,m_pr[0,x],D,R[x],phim_r[x])
-        pp_prI = X3[0,0]
+    #     arg3 = (mu1,m_pr[0,x],D,R[x],phim_r[x])
+    #     sol3 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_prI], t_eval=[z[x]],args = arg3, rtol = 1e-7,atol = 1e-9,method = 'LSODA')
+    #     X3 = sol3.y
+    #     pp_pr[x] = X3[0,0] 
+    #     #pz_pr[x] = ppz_val(pp_pr[x],mu1,m_pr[0,x],D,R[x],phim_r[x])
+    #     pp_prI = X3[0,0]
 
-        #if (x<(num_rp-1)):
-        arg4 = (mu1,m_rl[0,x],D,R_l[x],phim[x])
-        sol4 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_rlI], t_eval=[z[x]],args = arg4, rtol = 1e-7,atol = 1e-9,method = 'LSODA')#,max_step=1e-3)
-        X4 = sol4.y
-        pp_rl[x] = X4[0,0] 
-        pp_rlI = X4[0,0]
+    #     #if (x<(num_rp-1)):
+    #     arg4 = (mu1,m_rl[0,x],D,R_l[x],phim[x])
+    #     sol4 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_rlI], t_eval=[z[x]],args = arg4, rtol = 1e-7,atol = 1e-9,method = 'LSODA')#,max_step=1e-3)
+    #     X4 = sol4.y
+    #     pp_rl[x] = X4[0,0] 
+    #     pp_rlI = X4[0,0]
 
-        arg5 = (mu1,m_rr[0,x],D,R_r[x],phim[x])
-        sol5 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_rrI], t_eval=[z[x]],args = arg5, rtol = 1e-7,atol = 1e-9,method = 'LSODA')#,max_step=1e-3)
-        X5 = sol5.y
-        pp_rr[x] = X5[0,0] 
-        pp_rrI = X5[0,0]
+    #     arg5 = (mu1,m_rr[0,x],D,R_r[x],phim[x])
+    #     sol5 = solve_ivp(Ppz, [z[x-1], z[x]], [pp_rrI], t_eval=[z[x]],args = arg5, rtol = 1e-7,atol = 1e-9,method = 'LSODA')#,max_step=1e-3)
+    #     X5 = sol5.y
+    #     pp_rr[x] = X5[0,0] 
+    #     pp_rrI = X5[0,0]
   
-        #raise Exception('ODE solved')
+    #     #raise Exception('ODE solved')
 
     # pz_ml[1:-1] = (pp_ml[1:-1] - pp_ml[0:-2])/delx
     # pz_mr[1:-1] = (pp_mr[1:-1] - pp_mr[0:-2])/delx
@@ -354,19 +354,20 @@ def Full_ppz(q_l,q_r,aux_l,aux_r,problem_data):
     # pp_rr[num_rp-1] = pp_rr[num_rp-2]
 
     #pp_mr[1:-1] = pp_ml[2:]
-    # d2 = 5
-    # pp0 = 2
-    # c2=0.3
+    
+    d2 = 5
+    pp0 = 2
+    c2=0.3
    
 
-    # pp = pp0 + c2*np.exp(-((zz-.6)*d2)**2) 
+    pp = pp0 + c2*np.exp(-((zz-.6)*d2)**2) 
 
-    # pp_ml = pp
-    # pp_mr = pp
-    # pp_pl = pp
-    # pp_pr = pp
-    # pp_rl = pp
-    # pp_rr = pp
+    pp_ml = pp
+    pp_mr = pp
+    pp_pl = pp
+    pp_pr = pp
+    pp_rl = pp
+    pp_rr = pp
 
     pz_ml = ppz_val(pp_ml,mu1,m_ml[0,:],D,R,phim)
     pz_mr = ppz_val(pp_mr,mu1,m_mr[0,:],D,R,phim)
